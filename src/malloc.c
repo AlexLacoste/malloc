@@ -15,7 +15,7 @@ static metadata_t *best_fit(metadata_t **end, size_t size)
     metadata_t *save = NULL;
     metadata_t *save2 = NULL;
 
-    for (metadata_t *tmp = global_ptr(NULL, false); tmp; tmp = tmp ->next) {
+    for (metadata_t *tmp = global_ptr(NULL, false); tmp; tmp = tmp->next) {
         if (tmp->is_free_mem && tmp->size >= size) {
             save = tmp;
         } else
@@ -34,8 +34,7 @@ static metadata_t *best_fit(metadata_t **end, size_t size)
 
 static metadata_t *enlarge(metadata_t *end, size_t size)
 {
-    metadata_t *tmp = (!end) ? sbrk(0) : (void *)(end + 1) +
-                                            end->size;
+    metadata_t *tmp = (!end) ? sbrk(0) : (void *)(end + 1) + end->size;
     size_t mult = 2;
 
     if ((size_t)current_size(0, false) < size + sizeof(metadata_t)) {
@@ -43,8 +42,8 @@ static metadata_t *enlarge(metadata_t *end, size_t size)
             mult += 2;
         if (sbrk(sysconf(_SC_PAGESIZE) * mult) == (void *)-1)
             return NULL;
-        current_size(current_size(0, false) +
-                    sysconf(_SC_PAGESIZE) * mult, true);
+        current_size(
+            current_size(0, false) + sysconf(_SC_PAGESIZE) * mult, true);
     }
     tmp->size = size;
     tmp->next = NULL;
@@ -57,7 +56,7 @@ static metadata_t *enlarge(metadata_t *end, size_t size)
 
 static metadata_t *ptr_algo(size_t align)
 {
-    metadata_t * end = global_ptr(NULL, false);
+    metadata_t *end = global_ptr(NULL, false);
     metadata_t *ptr = best_fit(&end, align);
 
     if (!ptr) {

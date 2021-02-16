@@ -12,8 +12,7 @@
 static metadata_t *use_next_chunk(metadata_t *current)
 {
     if (current && current->next && current->next->is_free_mem) {
-        current->size += sizeof(metadata_t) +
-                        current->next->size;
+        current->size += sizeof(metadata_t) + current->next->size;
         current->next = current->next->next;
     }
     return current;

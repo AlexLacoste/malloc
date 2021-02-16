@@ -9,7 +9,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "../include/libmem.h"
+#include "libmem.h"
 
 metadata_t *global_ptr(metadata_t *ptr, bool set_new_value)
 {

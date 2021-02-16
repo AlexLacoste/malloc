@@ -7,8 +7,8 @@
 
 #include <stddef.h>
 #include <string.h>
-#include "../include/libmem.h"
-#include "../include/my_macros.h"
+#include "libmem.h"
+#include "my_macros.h"
 
 static void *hanlde_realloc_error(void *ptr, size_t size)
 {
