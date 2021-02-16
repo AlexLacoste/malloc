@@ -10,59 +10,49 @@
 #include "libmem.h"
 #include "my_macros.h"
 
-
-// static metadata_t *best_fit(metadata_t **end, size_t size) // gérer le cas tmpNot found
-// {
-//     metadata_t *save = NULL;
-//     metadata_t *save2 = NULL;
-
-//     mputAddr("before ", *end, 1);
-//     for (metadata_t *tmp = global_ptr(NULL, false); tmp; tmp = tmp ->next) {
-//         if (tmp->is_free_mem && tmp->size >= size) {
-//             save = tmp;
-//             break;
-//         }
-//         save2 = tmp;
-//     }
-//     if (save) {
-//         write(2, "found ", 6);
-//         *end = save;
-//         return save->next ;
-//     }
-//     if (save2) {
-//         write(2, "not foundBut ", 13);
-//         *end = save2;
-//         mputAddr("after ", *end, 1);
-//         return NULL;
-//     }
-//     if (global_ptr(NULL, false))
-//         write(2, "tmpNot found ", 13);
-//     else
-//         write(2, "not found ", 10);
-//     return global_ptr(NULL, false);
-// }
-
-static metadata_t *best_fit(metadata_t **end, size_t size) // faire best_fit
+static metadata_t *best_fit(metadata_t **end, size_t size)
 {
-    metadata_t *tmp = global_ptr(NULL, false);
-    // bool check = false;
+    metadata_t *save = NULL;
+    metadata_t *save2 = NULL;
 
-    // mputAddr("before ", *end, 1);
-    for (; tmp && (!tmp->is_free_mem || tmp->size < size); tmp = tmp->next) {
-        *end = tmp;
-        // check = true;
+    for (metadata_t *tmp = global_ptr(NULL, false); tmp; tmp = tmp ->next) {
+        if (tmp->is_free_mem && tmp->size >= size) {
+            save = tmp;
+        } else
+            save2 = tmp;
     }
-    // if (check && tmp)
-    //     write(2, "found ", 6);
-    // else if (check) {
-    //     write(2, "not foundBut ", 13);
-    //     mputAddr("after ", *end, 1);
-    // } else if (tmp)
-    //     write(2, "tmpNot found ", 13);
-    // else
-    //     write(2, "not found ", 10);
-    return tmp;
+    if (save) {
+        *end = save2;
+        return save;
+    }
+    if (save2) {
+        *end = save2;
+        return NULL;
+    }
+    return global_ptr(NULL, false);
 }
+
+// static metadata_t *best_fit(metadata_t **end, size_t size) // faire best_fit
+// {
+//     metadata_t *tmp = global_ptr(NULL, false);
+//     // bool check = false;
+
+//     // mputAddr("before ", *end, 1);
+//     for (; tmp && (!tmp->is_free_mem || tmp->size < size); tmp = tmp->next) {
+//         *end = tmp;
+//         // check = true;
+//     }
+//     // if (check && tmp)
+//     //     write(2, "found ", 6);
+//     // else if (check) {
+//     //     write(2, "not foundBut ", 13);
+//     //     mputAddr("after ", *end, 1);
+//     // } else if (tmp)
+//     //     write(2, "tmpNot found ", 13);
+//     // else
+//     //     write(2, "not found ", 10);
+//     return tmp;
+// }
 
 static metadata_t *enlarge(metadata_t *end, size_t size)
 {
