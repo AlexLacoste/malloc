@@ -32,28 +32,6 @@ static metadata_t *best_fit(metadata_t **end, size_t size)
     return global_ptr(NULL, false);
 }
 
-// static metadata_t *best_fit(metadata_t **end, size_t size) // faire best_fit
-// {
-//     metadata_t *tmp = global_ptr(NULL, false);
-//     // bool check = false;
-
-//     // mputAddr("before ", *end, 1);
-//     for (; tmp && (!tmp->is_free_mem || tmp->size < size); tmp = tmp->next) {
-//         *end = tmp;
-//         // check = true;
-//     }
-//     // if (check && tmp)
-//     //     write(2, "found ", 6);
-//     // else if (check) {
-//     //     write(2, "not foundBut ", 13);
-//     //     mputAddr("after ", *end, 1);
-//     // } else if (tmp)
-//     //     write(2, "tmpNot found ", 13);
-//     // else
-//     //     write(2, "not found ", 10);
-//     return tmp;
-// }
-
 static metadata_t *enlarge(metadata_t *end, size_t size)
 {
     metadata_t *tmp = (!end) ? sbrk(0) : (void *)(end + 1) +
@@ -103,7 +81,6 @@ void *malloc(size_t size)
     metadata_t *ptr = NULL;
     size_t align = 0;
 
-    // write(2, "malloc ", 7);
     PTR(size, NULL);
     align = ALIGN16(size);
     if (global_ptr(NULL, false)) {
