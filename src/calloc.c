@@ -6,10 +6,9 @@
 */
 
 #include <stddef.h>
-#include <unistd.h>
 #include <string.h>
-#include "../include/libmem.h"
-#include "../include/my_macros.h"
+#include "libmem.h"
+#include "my_macros.h"
 
 void *calloc(size_t nmemb, size_t size)
 {

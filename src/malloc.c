@@ -7,8 +7,8 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "../include/libmem.h"
-#include "../include/my_macros.h"
+#include "libmem.h"
+#include "my_macros.h"
 
 
 // static metadata_t *best_fit(metadata_t **end, size_t size) // gérer le cas tmpNot found

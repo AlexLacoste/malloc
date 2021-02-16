@@ -6,11 +6,8 @@
 */
 
 #include <stddef.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include "../include/libmem.h"
-#include "../include/my_macros.h"
+#include "libmem.h"
+#include "my_macros.h"
 
 static metadata_t *use_next_chunk(metadata_t *current)
 {

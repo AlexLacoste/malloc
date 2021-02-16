@@ -6,10 +6,8 @@
 */
 
 #include <stddef.h>
-#include <string.h>
-#include <unistd.h>
-#include "../include/libmem.h"
-#include "../include/my_macros.h"
+#include "libmem.h"
+#include "my_macros.h"
 
 void *reallocarray(void *ptr, size_t nmemb, size_t size)
 {
