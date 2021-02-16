@@ -7,12 +7,11 @@
 
 #include <stddef.h>
 #include <string.h>
-#include "libmem.h"
-#include "my_macros.h"
+#include "../include/libmem.h"
+#include "../include/my_macros.h"
 
 static void *hanlde_realloc_error(void *ptr, size_t size)
 {
-    PTR(size && !ptr, NULL);
     if (!ptr)
         return malloc(size);
     free(ptr);

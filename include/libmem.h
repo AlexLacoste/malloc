@@ -28,9 +28,4 @@ void *reallocarray(void *ptr, size_t nmemb, size_t size);
 metadata_t *global_ptr(metadata_t *ptr, bool set_new_value);
 int current_size(int size, bool set_new_value);
 
-void mputAddr(char *str, void *addr, int do_print);
-void change_base(long long int nb, char *base);
-int mputnbr(long nb, int do_print);
-void mputstrnbr(char *str, long nb, int do_print);
-
 #endif /* !LIBMEM_H_ */

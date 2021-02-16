@@ -16,7 +16,6 @@ FILES	=	calloc.c		\
 			malloc.c		\
 			realloc.c		\
 			reallocarray.c	\
-			mputnbr.c		\
 			utils.c
 
 SRC		= 	$(addprefix src/, $(FILES))
