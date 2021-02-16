@@ -7,31 +7,30 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-#include "libmem.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include "../include/libmem.h"
 
-void *global_head(void *ptr, bool set_new_value)
+metadata_t *global_ptr(metadata_t *ptr, bool set_new_value)
 {
-    static void *head = NULL;
+    static metadata_t *tmp = NULL;
 
     if (set_new_value) {
-        head = ptr;
+        tmp = ptr;
         return NULL;
     } else {
-        return head;
+        return tmp;
     }
 }
 
-void split_block(metadata_t *current, size_t size)
+int current_size(int size, bool set_new_value)
 {
-    metadata_t *tmp = ((metadata_t *)current->end_meta) + size;
+    static int current = 0;
 
-    tmp->size = ALIGN8(current->size - size - sizeof(metadata_t));
-    tmp->next = current->next;
-    tmp->prev = current;
-    tmp->is_free_mem = 1;
-    tmp->ptr = current->end_meta;
-    current->size = ALIGN8(size);
-    current->next = tmp;
-    if (tmp->next)
-        tmp->next->prev = current;
+    if (set_new_value) {
+        current = size;
+        return 0;
+    } else {
+        return current;
+    }
 }

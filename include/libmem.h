@@ -11,15 +11,12 @@
 #include <stdbool.h>
 #include <sys/types.h>
 
-#define ALIGN8(x) (((x) + ((8) - 1)) & ~((8) - 1))
+#define ALIGN16(x) (((x) + ((16) - 1)) & ~((16) - 1))
 
 typedef struct metadata_s {
-    int is_free_mem;
+    bool is_free_mem;
     size_t size;
-    void *ptr;
     struct metadata_s *next;
-    struct metadata_s *prev;
-    char end_meta[0];
 } metadata_t;
 
 void *malloc(size_t size);
@@ -28,7 +25,12 @@ void *calloc(size_t nmemb , size_t size);
 void *realloc(void *ptr, size_t size);
 void *reallocarray(void *ptr, size_t nmemb, size_t size);
 
-void *global_head(void *ptr, bool set_new_value);
-void split_block(metadata_t *current, size_t size);
+metadata_t *global_ptr(metadata_t *ptr, bool set_new_value);
+int current_size(int size, bool set_new_value);
+
+void mputAddr(char *str, void *addr, int do_print);
+void change_base(long long int nb, char *base);
+int mputnbr(long nb, int do_print);
+void mputstrnbr(char *str, long nb, int do_print);
 
 #endif /* !LIBMEM_H_ */

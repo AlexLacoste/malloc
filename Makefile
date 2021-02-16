@@ -10,7 +10,13 @@ LDFLAGS	=	-shared
 
 NAME	=	libmy_malloc.so
 
-FILES	=	malloc.c		\
+
+FILES	=	calloc.c		\
+			free.c			\
+			malloc.c		\
+			realloc.c		\
+			reallocarray.c	\
+			mputnbr.c		\
 			utils.c
 
 SRC		= 	$(addprefix src/, $(FILES))
