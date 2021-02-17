@@ -5,7 +5,9 @@
 ## Makefile
 ##
 
-CFLAGS	=	-I./include -Wall -Wextra -Werror -Wno-deprecated -fPIC
+CXXFLAGS += -std=c++11
+
+CFLAGS	=	-I./include -Wall -Wextra  -Wno-deprecated -fPIC
 LDFLAGS	=	-shared
 
 NAME	=	libmy_malloc.so
@@ -20,12 +22,29 @@ FILES	=	calloc.c		\
 
 SRC		= 	$(addprefix src/, $(FILES))
 
-OBJ	=	$(SRC:.c=.o)
+TESTS	= 	src/malloc.c				\
+			src/utils.c					\
+			src/calloc.c				\
+			src/free.c					\
+			src/realloc.c				\
+			src/reallocarray.c			\
+			tests/tests_malloc.c		\
+			tests/tests_free.c			\
+			tests/tests_realloc.c		\
+			tests/tests_calloc.c		\
+			tests/tests_reallocarray.c
+
+OBJ		=	$(SRC:.c=.o)
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	gcc -o $(NAME) $(OBJ) $(LDFLAGS)
+
+tests_run: all
+	@rm -rf *.gc*
+	gcc -o unit_test -L./ -lmy_malloc $(TESTS) -I./include --coverage -lcriterion
+	./unit_test
 
 clean:
 	rm -f $(OBJ) $(OBJ2)
@@ -38,4 +57,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY: all fclean clean re  $(NAME)
+.PHONY: all $(NAME) tests_run clean fclean re
