@@ -44,7 +44,7 @@ $(NAME):	$(OBJ)
 tests_run: all
 	@rm -rf *.gc*
 	gcc -o unit_test -L./ -lmy_malloc $(TESTS) -I./include --coverage -lcriterion
-	./unit_test
+	LD_PRELOAD=`pwd`/$(NAME) ./unit_test
 
 clean:
 	rm -f $(OBJ) $(OBJ2)
