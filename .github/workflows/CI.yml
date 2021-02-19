@@ -11,7 +11,7 @@ jobs:
   build:
 
     container: epitechcontent/epitest-docker:latest
-    runs-on: fedora-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
