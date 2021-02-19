@@ -22,13 +22,7 @@ FILES	=	calloc.c		\
 
 SRC		= 	$(addprefix src/, $(FILES))
 
-TESTS	= 	src/malloc.c				\
-			src/utils.c					\
-			src/calloc.c				\
-			src/free.c					\
-			src/realloc.c				\
-			src/reallocarray.c			\
-			tests/tests_malloc.c		\
+TESTS	= 	tests/tests_malloc.c		\
 			tests/tests_free.c			\
 			tests/tests_realloc.c		\
 			tests/tests_calloc.c		\
@@ -46,7 +40,7 @@ $(NAME):	$(OBJ)
 tests_run::	$(TESTS_OBJ)
 tests_run:: all
 	@rm -rf *.gc*
-	gcc -o unit_test -L./ -lmy_malloc $(TESTS_OBJ) -I./include --coverage -lcriterion
+	gcc -o unit_test $(TESTS_OBJ) -I./include --coverage -lcriterion
 	LD_PRELOAD=./$(NAME) ./unit_test
 
 clean:
