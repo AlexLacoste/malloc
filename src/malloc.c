@@ -34,7 +34,7 @@ static metadata_t *best_fit(metadata_t **end, size_t size)
 
 static metadata_t *enlarge(metadata_t *end, size_t size)
 {
-    metadata_t *tmp = (!end) ? sbrk(0) : (void *)(end + 1) + end->size;
+    metadata_t *tmp = (!end) ? sbrk(0) : (char *)(end + 1) + end->size;
     size_t mult = 2;
 
     if ((size_t)current_size(0, false) < size + sizeof(metadata_t)) {
@@ -45,11 +45,11 @@ static metadata_t *enlarge(metadata_t *end, size_t size)
         current_size(
             current_size(0, false) + sysconf(_SC_PAGESIZE) * mult, true);
     }
-    tmp->size = size;
-    tmp->next = NULL;
-    tmp->is_free_mem = false;
+    ((metadata_t *)tmp)->size = size;
+    ((metadata_t *)tmp)->next = NULL;
+    ((metadata_t *)tmp)->is_free_mem = false;
     if (end)
-        end->next = tmp;
+        end->next = (metadata_t *)tmp;
     current_size(current_size(0, false) - size - sizeof(metadata_t), true);
     return tmp;
 }
