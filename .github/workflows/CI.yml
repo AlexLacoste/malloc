@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build:
+
+    container: epitechcontent/epitest-docker:latest
+    runs-on: fedora-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Compile check 🚀
+        run: make
+      - name: Compile tests
+        run: make tests_run
+      - name: Compile gcovr
+        run: gcovr
