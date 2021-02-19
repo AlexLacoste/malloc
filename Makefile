@@ -35,7 +35,7 @@ TESTS_OBJ		=	$(TESTS:.c=.o)
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	gcc -o $(NAME) $(OBJ) $(LDFLAGS)
+	gcc -o $(NAME) $(OBJ) $(LDFLAGS) --coverage
 
 tests_run::	$(TESTS_OBJ)
 tests_run:: all
