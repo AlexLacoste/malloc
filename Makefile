@@ -36,14 +36,17 @@ TESTS	= 	src/malloc.c				\
 
 OBJ		=	$(SRC:.c=.o)
 
+TESTS_OBJ		=	$(TESTS:.c=.o)
+
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	gcc -o $(NAME) $(OBJ) $(LDFLAGS)
 
-tests_run: all
+tests_run::	$(TESTS_OBJ)
+tests_run:: all
 	@rm -rf *.gc*
-	gcc -o unit_test -L./ -lmy_malloc $(TESTS) -I./include --coverage -lcriterion
+	gcc -o unit_test -L./ -lmy_malloc $(TESTS_OBJ) -I./include --coverage -lcriterion
 	LD_PRELOAD=./$(NAME) ./unit_test
 
 clean:
