@@ -5,13 +5,10 @@
 ## Makefile
 ##
 
-CXXFLAGS += -std=c++11
-
-CFLAGS	=	-I./include -Wall -Wextra  -Wno-deprecated -fPIC
+CFLAGS	=	-I./include -Wall -Wextra -fPIC
 LDFLAGS	=	-shared
 
 NAME	=	libmy_malloc.so
-
 
 FILES	=	calloc.c		\
 			free.c			\
@@ -22,7 +19,13 @@ FILES	=	calloc.c		\
 
 SRC		= 	$(addprefix src/, $(FILES))
 
-TESTS	= 	tests/tests_malloc.c		\
+TESTS	= 	src/malloc.c				\
+			src/utils.c					\
+			src/calloc.c				\
+			src/free.c					\
+			src/realloc.c				\
+			src/reallocarray.c			\
+			tests/tests_malloc.c		\
 			tests/tests_free.c			\
 			tests/tests_realloc.c		\
 			tests/tests_calloc.c		\
@@ -30,18 +33,15 @@ TESTS	= 	tests/tests_malloc.c		\
 
 OBJ		=	$(SRC:.c=.o)
 
-TESTS_OBJ		=	$(TESTS:.c=.o)
-
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	gcc -o $(NAME) $(OBJ) $(LDFLAGS) --coverage
+	gcc -o $(NAME) $(OBJ) $(LDFLAGS)
 
-tests_run::	$(TESTS_OBJ)
-tests_run:: all
+tests_run: all
 	@rm -rf *.gc*
-	gcc -o unit_test $(TESTS_OBJ) -I./include --coverage -lcriterion
-	LD_PRELOAD=./$(NAME) ./unit_test
+	gcc -o unit_test $(TESTS) -I./include --coverage -lcriterion
+	./unit_test
 
 clean:
 	rm -f $(OBJ) $(OBJ2)

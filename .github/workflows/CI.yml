@@ -20,4 +20,6 @@ jobs:
       - name: Compile tests
         run: make tests_run
       - name: Compile gcovr
-        run: gcovr
+        run: gcovr --exclude tests
+      - name: gcovr branches
+        run: gcovr -b --exclude tests

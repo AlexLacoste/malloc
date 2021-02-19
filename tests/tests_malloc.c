@@ -18,7 +18,7 @@ Test(malloc, no_error)
     test[2] = 's';
     test[3] = 't';
     test[4] = '\0';
-    cr_assert_str_eq("test", "test");
+    cr_assert_str_eq(test, "test");
 }
 
 Test(malloc, error)
